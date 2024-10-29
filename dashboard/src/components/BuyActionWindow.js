@@ -1,29 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-
 import axios from "axios"; //api endpointtun connect mhanun axios use
-
 import GeneralContext from "./GeneralContext";
-
 import "./BuyActionWindow.css";
 
 const BuyActionWindow = ({ uid }) => {
   const [stockQuantity, setStockQuantity] = useState(1);
   const [stockPrice, setStockPrice] = useState(0.0);
 
+  // Access the context here to use open and close functions
+  const { closeBuyWindow } = useContext(GeneralContext);
+
   const handleBuyClick = () => {
     axios.post("http://localhost:3002/newOrder", {
-      name: uid, //uid prope tun yenar
+      name: uid, // uid prope tun yenar
       qty: stockQuantity,
       price: stockPrice,
       mode: "BUY",
     });
 
-    GeneralContext.closeBuyWindow();
+    closeBuyWindow(); // Close the window after placing the order
   };
 
   const handleCancelClick = () => {
-    GeneralContext.closeBuyWindow();
+    closeBuyWindow(); // Close the window on cancel
   };
 
   return (

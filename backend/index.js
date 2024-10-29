@@ -212,11 +212,11 @@ app.post("/newOrder",async (req,res)=>{
     let newOrder =  new OrderModel({
         name: req.body.name,
         qty: req.body.qty,
-        price: res.body.price,
+        price: req.body.price,
         mode:req.body.mode, //data send karat ahot server la and database madhe store karu orders la
     });
 
-    newOrder.save();
+    await newOrder.save();
 
     res.send("order saved");
 })
